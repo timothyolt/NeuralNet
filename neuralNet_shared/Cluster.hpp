@@ -1,7 +1,7 @@
 // Copyright 2017 timothyolt.
 
-#ifndef NEURALNET_EDGECLUSTER_HPP_
-#define NEURALNET_EDGECLUSTER_HPP_
+#ifndef NEURALNET_CLUSTER_HPP_
+#define NEURALNET_CLUSTER_HPP_
 
 #include <vector>
 #include "Edge.hpp"
@@ -12,9 +12,10 @@ class Edge;
 class Cluster {
  private:
   unsigned int id;
-  Node node;
   std::vector<Edge*> backward;
   std::vector<Edge*> forward;
+  double in;
+  double out;
 
  public:
 
@@ -22,11 +23,19 @@ class Cluster {
 
   Cluster(const Cluster& copy);
 
-  void setBackward(std::vector<Edge *> &backward);
+  void setBackwardEdges(std::vector<Edge *> &backward);
 
-  void forwardPushBack(Edge *&forward);
+  void pushForwardEdge(Edge *&forward);
+
+  void reset();
+
+  void set(double in);
+
+  double get();
+
+  void feed();
 
 };
 }
 
-#endif  // NEURALNET_EDGECLUSTER_HPP_
+#endif  // NEURALNET_CLUSTER_HPP_
