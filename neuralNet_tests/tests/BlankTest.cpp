@@ -4,8 +4,19 @@
 #include <Network.hpp>
 
 TEST(BlankTest, BlankTest) {
-  std::vector<unsigned int> params({16, 8, 4});
+  std::vector<unsigned int> params({64, 32, 10});
   nnet::Network net(params);
+  std::vector<double> inputs({
+                                       1, 1, 1, 1, 1, 1, 1, 1,
+                                       1, 1, 1, 1, 1, 1, 1, 1,
+                                       1, 1, 1, 1, 1, 1, 1, 1,
+                                       1, 1, 1, 1, 1, 1, 1, 1,
+                                       1, 1, 1, 1, 1, 1, 1, 1,
+                                       1, 1, 1, 1, 1, 1, 1, 1,
+                                       1, 1, 1, 1, 1, 1, 1, 1,
+                                       1, 1, 1, 1, 1, 1, 1, 1,
+                                   });
+  auto out(net.feed(inputs));
   net.dispose();
   std::cout << std::endl << "return" << std::endl;
 }

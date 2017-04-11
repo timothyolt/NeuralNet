@@ -9,10 +9,10 @@ namespace nnet {
 class Layer {
  private:
   std::vector<Cluster*> clusters;
+
   Cluster* bias;
 
  public:
-
   Layer();
 
   Layer(const Layer& copy);
@@ -20,6 +20,14 @@ class Layer {
   explicit Layer(unsigned int size);
 
   void link(Layer *backward);
+
+  void reset();
+
+  void set(std::vector<double> &in);
+
+  std::vector<double> get();
+
+  void feed();
 
   void dispose();
 };

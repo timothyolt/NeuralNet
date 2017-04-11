@@ -15,6 +15,10 @@ class Network {
 
   Network(std::vector<unsigned int>& layerSizes);
 
+  void reset();
+
+  std::vector<double> feed(std::vector<double> &in);
+
   void dispose();
 };
 }
