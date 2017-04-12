@@ -21,11 +21,19 @@ void Network::reset() {
     layers[i].reset();
 }
 
-std::vector<double> Network::feed(std::vector<int> &in) {
+int Network::feed(std::vector<int> &in) {
   layers.front().set(in);
   for (auto i(0); i < layers.size(); ++i)
       layers[i].feed();
-  return layers.back().get();
+  auto outVector(layers.back().get());
+  double max(outVector.front());
+  int maxI(0);
+  for (auto i(0); i < outVector.size(); ++i)
+    if (outVector[i] > max){
+      max = outVector[i];
+      maxI = i;
+    }
+  return maxI;
 }
 
 void Network::back(int desired) {

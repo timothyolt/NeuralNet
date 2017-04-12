@@ -13,6 +13,7 @@ Layer::Layer(const Layer &copy) : clusters(copy.clusters.size()), bias(copy.bias
 }
 
 Layer::Layer(unsigned int size) : clusters(), bias(new Cluster()) {
+  bias->set(16);
   for (auto i(0); i < size; ++i)
     clusters.push_back(new Cluster());
 }

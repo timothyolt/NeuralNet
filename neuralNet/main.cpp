@@ -24,9 +24,17 @@ int main(){
   auto test(nnet::Utils::prepareInputs(optdigits_test, 1797, 65));
   optdigits_train.close();
   // train network
-  auto out(net.feed(train[0]));
-  std::vector<double> desired({1, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-  net.back(train[0][64]);
+  for (auto i(0); i < train.size(); ++i) {
+    net.feed(train[i]);
+    net.back(train[i][64]);
+    net.reset();
+  }
+  int trainCorrect(0);
+  for (auto i(0); i < test.size(); ++i) {
+    if (test[i][65] == net.feed(test[i]))
+      trainCorrect++;
+    net.reset();
+  }
   net.dispose();
   return 0;
 }

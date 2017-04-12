@@ -17,9 +17,11 @@ class Network {
 
   void reset();
 
-  std::vector<double> feed(std::vector<int> &in);
+  int feed(std::vector<int> &in);
 
   void back(int desired);
+
+  int get();
 
   void dispose();
 };
