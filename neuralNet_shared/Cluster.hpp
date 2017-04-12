@@ -16,6 +16,7 @@ class Cluster {
   std::vector<Edge*> forward;
   double in;
   double out;
+  double gradient;
 
  public:
 
@@ -35,6 +36,11 @@ class Cluster {
 
   void feed();
 
+  void grade();
+
+  void grade(double desired);
+
+  void update();
 };
 }
 

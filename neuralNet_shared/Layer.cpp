@@ -36,9 +36,9 @@ void Layer::reset() {
     clusters[i]->reset();
 }
 
-void Layer::set(std::vector<double> &in) {
-  for (auto i(0); i < in.size(); ++i)
-    clusters[i]->set(in[i]);
+void Layer::set(std::vector<int> &in) {
+  for (auto i(0); i < clusters.size(); ++i)
+    clusters[i]->set(in[i] / 16.0);
 }
 
 std::vector<double> Layer::get() {
@@ -52,6 +52,21 @@ std::vector<double> Layer::get() {
 void Layer::feed() {
   for (auto i(0); i < clusters.size(); ++i)
     clusters[i]->feed();
+}
+
+void Layer::grade() {
+  for (auto i(0); i < clusters.size(); ++i)
+    clusters[i]->grade();
+}
+
+void Layer::grade(std::vector<double> &desired) {
+  for (auto i(0); i < clusters.size(); ++i)
+    clusters[i]->grade(desired[i]);
+}
+
+void Layer::update() {
+  for (auto i(0); i < clusters.size(); ++i)
+    clusters[i]->update();
 }
 
 void Layer::dispose() {

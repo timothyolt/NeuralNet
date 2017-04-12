@@ -26,10 +26,12 @@ void Cluster::pushForwardEdge(nnet::Edge *&forward) {
 void Cluster::reset() {
   in = 0;
   out = 0;
+  gradient = 0;
 }
 
-void Cluster::set(double in) {
- Cluster::in += in;
+void Cluster::set(double value) {
+  in += value;
+  out += value;
 }
 
 double Cluster::get() {
@@ -37,8 +39,22 @@ double Cluster::get() {
 }
 
 void Cluster::feed() {
-  double sigmoid(1 / (1 + std::exp(in)));
-  out = sigmoid * (1 - sigmoid);
+  out = 1 / (1 + std::exp(in));
   for (auto i(0); i < forward.size(); ++i)
     forward[i]->destination->in += forward[i]->weight * out;
+}
+
+void Cluster::grade() {
+  for (auto i(0); i < forward.size(); ++i)
+    gradient += forward[i]->weight * forward[i]->destination->gradient;
+  gradient *= out * (1 - out);
+}
+
+void Cluster::grade(double desired) {
+  gradient = (desired - out) * out * (1 - out);
+}
+
+void Cluster::update() {
+  for (auto i(0); i < backward.size(); ++i)
+    backward[i]->weight += 0.3 * backward[i]->origin->out * gradient;
 }

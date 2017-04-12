@@ -21,11 +21,24 @@ void Network::reset() {
     layers[i].reset();
 }
 
-std::vector<double> Network::feed(std::vector<double> &in) {
+std::vector<double> Network::feed(std::vector<int> &in) {
   layers.front().set(in);
   for (auto i(0); i < layers.size(); ++i)
       layers[i].feed();
   return layers.back().get();
+}
+
+void Network::back(int desired) {
+  std::vector<double> desiredVector(10);
+  for (auto j(0); j < 10; ++j)
+    desiredVector[j] = 0;
+  desiredVector[desired] = 1;
+
+  layers.back().grade(desiredVector);
+  for (auto i(layers.size() - 1); i >= 1; --i)
+    layers[i].grade();
+  for (auto i(1); i < layers.size(); ++i)
+    layers[i].update();
 }
 
 void Network::dispose() {

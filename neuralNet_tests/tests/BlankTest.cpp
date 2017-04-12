@@ -17,6 +17,8 @@ TEST(BlankTest, BlankTest) {
                                        1, 1, 1, 1, 1, 1, 1, 1,
                                    });
   auto out(net.feed(inputs));
+  std::vector<double> desired({0, 0, 0, 0, 0, 0, 0, 0, 0, 1});
+  net.back(desired);
   net.dispose();
   std::cout << std::endl << "return" << std::endl;
 }

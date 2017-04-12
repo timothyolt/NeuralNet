@@ -23,11 +23,17 @@ class Layer {
 
   void reset();
 
-  void set(std::vector<double> &in);
+  void set(std::vector<int> &in);
 
   std::vector<double> get();
 
   void feed();
+
+  void grade();
+
+  void grade(std::vector<double> &desired);
+
+  void update();
 
   void dispose();
 };
