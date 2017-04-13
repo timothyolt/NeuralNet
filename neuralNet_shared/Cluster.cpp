@@ -7,10 +7,11 @@
 
 using nnet::Cluster;
 
-Cluster::Cluster() : id(Utils::makeId()), backward(0), forward(0) { }
+Cluster::Cluster() : id(Utils::makeId()), backward(0), forward(0), in(0), out(0), gradient(0) { }
 
 Cluster::Cluster(const Cluster &copy)
-    : id(copy.id), backward(copy.backward.size()), forward(copy.forward.size()) {
+    : id(copy.id), backward(copy.backward.size()), forward(copy.forward.size())
+    , in(0), out(0), gradient(0) {
   std::copy(copy.backward.begin(), copy.backward.end(), backward.begin());
   std::copy(copy.forward.begin(), copy.forward.end(), forward.begin());
 }
@@ -39,7 +40,7 @@ double Cluster::get() {
 }
 
 void Cluster::feed() {
-  out = 1 / (1 + std::exp(in));
+  out = 1 / (1 + std::exp(-in));
   for (auto i(0); i < forward.size(); ++i)
     forward[i]->destination->in += forward[i]->weight * out;
 }
@@ -56,5 +57,5 @@ void Cluster::grade(double desired) {
 
 void Cluster::update() {
   for (auto i(0); i < backward.size(); ++i)
-    backward[i]->weight += 0.3 * backward[i]->origin->out * gradient;
+    backward[i]->weight += 0.9 * backward[i]->origin->out * gradient;
 }

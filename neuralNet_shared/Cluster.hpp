@@ -5,7 +5,6 @@
 
 #include <vector>
 #include "Edge.hpp"
-#include "Node.hpp"
 
 namespace nnet {
 class Edge;

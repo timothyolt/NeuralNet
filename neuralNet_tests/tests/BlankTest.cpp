@@ -4,21 +4,11 @@
 #include <Network.hpp>
 
 TEST(BlankTest, BlankTest) {
-  std::vector<unsigned int> params({64, 32, 10});
+  std::vector<unsigned int> params({2, 1});
   nnet::Network net(params);
-  std::vector<double> inputs({
-                                       1, 1, 1, 1, 1, 1, 1, 1,
-                                       1, 1, 1, 1, 1, 1, 1, 1,
-                                       1, 1, 1, 1, 1, 1, 1, 1,
-                                       1, 1, 1, 1, 1, 1, 1, 1,
-                                       1, 1, 1, 1, 1, 1, 1, 1,
-                                       1, 1, 1, 1, 1, 1, 1, 1,
-                                       1, 1, 1, 1, 1, 1, 1, 1,
-                                       1, 1, 1, 1, 1, 1, 1, 1,
-                                   });
-  auto out(net.feed(inputs));
-  std::vector<double> desired({0, 0, 0, 0, 0, 0, 0, 0, 0, 1});
-  net.back(desired);
+  std::vector<int> inputs({ 16, 16 });
+  net.feed(inputs);
+  net.back(0);
   net.dispose();
   std::cout << std::endl << "return" << std::endl;
 }

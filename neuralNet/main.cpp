@@ -1,12 +1,12 @@
 #include <iostream>
 #include <Utils.hpp>
-#include <Network.hpp>
 #include <fstream>
 #include <assert.h>
+#include <Network.hpp>
 
 int main(){
   // init network
-  std::vector<unsigned int> params({64, 32, 10});
+  std::vector<unsigned int> params({64, 128, 10});
   nnet::Network net(params);
   // load samples
   std::ifstream optdigits_train("./../data/optdigits_train.txt");
@@ -23,17 +23,22 @@ int main(){
   }
   auto test(nnet::Utils::prepareInputs(optdigits_test, 1797, 65));
   optdigits_train.close();
-  // train network
-  for (auto i(0); i < train.size(); ++i) {
-    net.feed(train[i]);
-    net.back(train[i][64]);
-    net.reset();
-  }
-  int trainCorrect(0);
-  for (auto i(0); i < test.size(); ++i) {
-    if (test[i][65] == net.feed(test[i]))
-      trainCorrect++;
-    net.reset();
+  // epoch
+  for (auto j(0); j < 25; ++j) {
+    // train network
+    for (auto i(0); i < train.size(); ++i) {
+      net.feed(train[i]);
+      net.back(train[i][64]);
+      net.reset();
+    }
+    // test network
+    int testCorrect(0);
+    for (auto i(0); i < test.size(); ++i) {
+      if (test[i][64] == net.feed(test[i]))
+        testCorrect++;
+      net.reset();
+    }
+    std::cout << testCorrect << std::endl;
   }
   net.dispose();
   return 0;

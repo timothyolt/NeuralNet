@@ -43,9 +43,9 @@ void Network::back(int desired) {
   desiredVector[desired] = 1;
 
   layers.back().grade(desiredVector);
-  for (auto i(layers.size() - 1); i >= 1; --i)
+  for (auto i(layers.size() - 2); i < layers.size(); --i)
     layers[i].grade();
-  for (auto i(1); i < layers.size(); ++i)
+  for (auto i(0); i < layers.size(); ++i)
     layers[i].update();
 }
 

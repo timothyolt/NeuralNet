@@ -21,8 +21,6 @@ class Network {
 
   void back(int desired);
 
-  int get();
-
   void dispose();
 };
 }

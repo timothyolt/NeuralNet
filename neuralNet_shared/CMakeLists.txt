@@ -6,9 +6,9 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCE_FILES
         Utils.hpp
         Cluster.cpp Cluster.hpp
-        Layer.cpp Layer.hpp
         Edge.cpp Edge.hpp
-        Network.cpp Network.hpp Node.cpp Node.hpp)
+        Layer.cpp Layer.hpp
+        Network.cpp Network.hpp)
 
 add_library(neuralNet_shared STATIC ${SOURCE_FILES})
 set_target_properties(neuralNet_shared PROPERTIES LINKER_LANGUAGE CXX)

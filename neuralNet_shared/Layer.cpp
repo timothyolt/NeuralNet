@@ -13,7 +13,7 @@ Layer::Layer(const Layer &copy) : clusters(copy.clusters.size()), bias(copy.bias
 }
 
 Layer::Layer(unsigned int size) : clusters(), bias(new Cluster()) {
-  bias->set(16);
+  bias->set(1);
   for (auto i(0); i < size; ++i)
     clusters.push_back(new Cluster());
 }
@@ -22,9 +22,11 @@ void Layer::link(Layer *backward) {
   for (auto i(0); i < clusters.size(); ++i) {
     std::vector<Edge*> edges;
     edges.reserve(backward->clusters.size() + 1);
-    edges.push_back(new Edge(backward->bias, clusters[i], (rand() / (double) INT_MAX) * 0.5 + 0.0001));
+    auto biasEdge(new Edge(backward->bias, clusters[i], (rand() / (double) INT_MAX) * 0.4 - 0.2));
+    backward->bias->pushForwardEdge(biasEdge);
+    edges.push_back(biasEdge);
     for (auto j(0); j < backward->clusters.size(); ++j) {
-      auto edge(new Edge(backward->clusters[j], clusters[i], (rand() / (double) INT_MAX) * 0.5 + 0.0001));
+      auto edge(new Edge(backward->clusters[j], clusters[i], (rand() / (double) INT_MAX) * 0.4 - 0.2));
       backward->clusters[j]->pushForwardEdge(edge);
       edges.push_back(edge);
     }
@@ -33,6 +35,8 @@ void Layer::link(Layer *backward) {
 }
 
 void Layer::reset() {
+  bias->reset();
+  bias->set(1);
   for (auto i(0); i < clusters.size(); ++i)
     clusters[i]->reset();
 }
