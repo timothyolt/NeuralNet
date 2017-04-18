@@ -12,6 +12,7 @@ endif()
 
 include_directories(neuralNet_shared)
 
+add_subdirectory(data)
 add_subdirectory(neuralNet)
 add_subdirectory(neuralNet_shared)
 add_subdirectory(neuralNet_tests)
