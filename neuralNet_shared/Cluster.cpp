@@ -55,7 +55,7 @@ void Cluster::grade(double desired) {
   gradient = (desired - out) * out * (1 - out);
 }
 
-void Cluster::update() {
+void Cluster::update(double learnRate) {
   for (auto i(0); i < backward.size(); ++i)
-    backward[i]->weight += 0.9 * backward[i]->origin->out * gradient;
+  backward[i]->weight += learnRate * backward[i]->origin->out * gradient;
 }

@@ -36,7 +36,7 @@ int Network::feed(std::vector<int> &in) {
   return maxI;
 }
 
-void Network::back(int desired) {
+void Network::back(int desired, double learnRate) {
   std::vector<double> desiredVector(10);
   for (auto j(0); j < 10; ++j)
     desiredVector[j] = 0;
@@ -46,7 +46,7 @@ void Network::back(int desired) {
   for (auto i(layers.size() - 2); i < layers.size(); --i)
     layers[i].grade();
   for (auto i(0); i < layers.size(); ++i)
-    layers[i].update();
+    layers[i].update(learnRate);
 }
 
 void Network::dispose() {

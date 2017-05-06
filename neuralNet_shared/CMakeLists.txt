@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCE_FILES
         Utils.hpp
         Cluster.cpp Cluster.hpp
-        Edge.cpp Edge.hpp
+        Edge.cpp
         Layer.cpp Layer.hpp
         Network.cpp Network.hpp)
 

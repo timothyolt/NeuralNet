@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include "string"
+#include "Network.hpp"
 
 struct csv : std::ctype<char> {
   csv(char* delimiters, unsigned int count) : std::ctype<char>([delimiters, count]() -> const mask * {
@@ -14,6 +15,7 @@ struct csv : std::ctype<char> {
     for (auto i(0); i < count; ++i)
       rc[delimiters[i]] = std::ctype_base::space;
     rc['\n'] = std::ctype_base::space;
+    rc['\r'] = std::ctype_base::space;
     return &rc[0];
   }()) { }
 };
@@ -42,8 +44,13 @@ class Utils {
     }
     return set;
   }
+
+  inline static void prepareWeights(std::istream& in, Network &network) {
+    char delimiters[] = {','};
+    in.imbue(std::locale(in.getloc(), new csv(delimiters, 1)));
+    in >> network;
+  }
 };
 }
-
 
 #endif // NEURALNET_SHARED_UTILS_HPP_

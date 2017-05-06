@@ -1,6 +1,6 @@
 // Copyright 2017 timothyolt.
 
-#include "Edge.hpp"
+#include "Cluster.hpp"
 
 using nnet::Edge;
 

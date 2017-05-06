@@ -3,6 +3,7 @@
 #ifndef NEURALNET_LAYER_HPP_
 #define NEURALNET_LAYER_HPP_
 
+#include <iostream>
 #include "Cluster.hpp"
 
 namespace nnet {
@@ -33,9 +34,23 @@ class Layer {
 
   void grade(std::vector<double> &desired);
 
-  void update();
+  void update(double learnRate);
 
   void dispose();
+
+  friend std::ostream &operator<<(std::ostream &os, const Layer &layer) {
+    os << *layer.bias << std::endl;
+    for (auto i(0); i < layer.clusters.size(); ++i)
+      os << *layer.clusters[i] << std::endl;
+    return os;
+  }
+
+  friend std::istream &operator>>(std::istream &is, Layer &layer) {
+    is >> *layer.bias;
+    for (auto i(0); i < layer.clusters.size(); ++i)
+      is >> *layer.clusters[i];
+    return is;
+  }
 };
 }
 

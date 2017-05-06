@@ -69,9 +69,9 @@ void Layer::grade(std::vector<double> &desired) {
     clusters[i]->grade(desired[i]);
 }
 
-void Layer::update() {
+void Layer::update(double learnRate) {
   for (auto i(0); i < clusters.size(); ++i)
-    clusters[i]->update();
+    clusters[i]->update(learnRate);
 }
 
 void Layer::dispose() {

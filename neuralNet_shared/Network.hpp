@@ -3,6 +3,7 @@
 #ifndef NEURALNET_NETWORK_HPP_
 #define NEURALNET_NETWORK_HPP_
 
+#include <iostream>
 #include "Layer.hpp"
 
 namespace nnet {
@@ -19,9 +20,21 @@ class Network {
 
   int feed(std::vector<int> &in);
 
-  void back(int desired);
+  void back(int desired, double learnRate);
 
   void dispose();
+
+  friend std::ostream &operator<<(std::ostream &os, const Network &network) {
+    for (int i = 0; i < network.layers.size() - 1; ++i)
+      os << network.layers[i] << std::endl;
+    return os;
+  }
+
+  friend std::istream &operator>>(std::istream &is, Network &network) {
+    for (int i = 0; i < network.layers.size() - 1; ++i)
+      is >> network.layers[i];
+    return is;
+  }
 };
 }
 
